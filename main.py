@@ -1,54 +1,12 @@
-from gera_lab_map2 import gera_lab
-from Pilhas import Pilha
+from Pilha import Pilha
+from Labirinto import Labirinto
+from Funcoes import eh_possivel_sair
 
-lab_1 = [['#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'], 
-          [' ', '#', ' ', ' ', ' ', ' ', '#', '#', ' ', ' ', ' ', ' ', '#', ' ', '#'], 
-          ['#', ' ', '#', ' ', ' ', '#', ' ', '#', '#', ' ', ' ', ' ', ' ', ' ', '#'], 
-          ['#', ' ', ' ', ' ', '#', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', ' ', '#'], 
-          ['#', ' ', ' ', '#', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', '#'], 
-          ['#', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', '#', '#', ' ', ' ', ' ', ' '], 
-          ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#']]
-(1,0)
-lab_2 = [['#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'], 
-          [' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', '#', '#', ' ', '#'], 
-          ['#', ' ', ' ', ' ', ' ', ' ', '#', ' ', '#', ' ', ' ', '#', ' ', ' ', '#'], 
-          ['#', ' ', ' ', ' ', ' ', ' ', '#', ' ', '#', ' ', ' ', '#', '#', ' ', '#'], 
-          ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', '#'], 
-          ['#', ' ', ' ', '#', ' ', ' ', ' ', '#', '#', ' ', ' ', '#', ' ', ' ', ' '], 
-          ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#']]
-
-lab_3 = [['#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'], 
-          [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', '#'], 
-          ['#', ' ', ' ', ' ', '#', ' ', ' ', ' ', '#', ' ', ' ', ' ', ' ', ' ', '#'], 
-          ['#', ' ', '#', '#', ' ', '#', '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'], 
-          ['#', ' ', ' ', ' ', ' ', ' ', '#', '#', ' ', ' ', ' ', ' ', '#', ' ', '#'], 
-          ['#', '#', ' ', '#', ' ', ' ', ' ', ' ', '#', ' ', ' ', '#', ' ', ' ', ' '], 
-          ['#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#']]
-
-def proximo_passo(pos_atual, trajeto, meu_lab):
-
-    direcoes = [( pos_atual[0], pos_atual[-1]+1 ),
-                ( pos_atual[0]+1, pos_atual[-1] ),
-                ( pos_atual[0], pos_atual[-1]-1 ),
-                ( pos_atual[0]-1, pos_atual[-1] )]
+def main():   
+    meu_labirinto = Labirinto(11,8)
     
-    for direcao in direcoes:
-        if meu_lab[direcao[0]][direcao[-1]] != "#":
-            if direcao != trajeto.top():
-                return direcao
+    meu_labirinto.imprime_matriz_labirinto()
+    print("Eh possivel sair: ", eh_possivel_sair(meu_labirinto))
 
-    return trajeto.top()
-
-def faz_trajeto(coordenada, trajeto, labirinto, primeiro_passo=True):
-    if coordenada == (1, 0) and not primeiro_passo:
-        return False
-    elif coordenada == labirinto[-2][-1]:
-        return True
-    else:
-        trajeto.push(coordenada)
-        return faz_trajeto(proximo_passo(coordenada, trajeto, labirinto), trajeto,labirinto, False)
-
-INICIO = (1,0)
-trajetoria = Pilha()
-
-print(faz_trajeto(INICIO, trajetoria, lab_2))
+if __name__ == '__main__':
+    main()
